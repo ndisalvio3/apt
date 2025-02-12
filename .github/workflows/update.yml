@@ -1,0 +1,47 @@
+name: Update packages
+
+on:
+  push:
+  schedule:
+    - cron: '0 */3 * * *'
+
+  workflow_dispatch:
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.MY_TOKEN }} 
+      - name: Import key
+        env: 
+          # Imported using `gpg --export-secret-key "Discord Apt Repository" | base64 > private.pgp`
+          PRIVATE_KEY: ${{ secrets.PRIVATE_KEY }}      
+        run: |
+          echo -n "$PRIVATE_KEY" | base64 --decode | gpg --pinentry-mode loopback --batch --import
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: 3.9
+          cache: 'pip'
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+      - name: Update packages
+        env: 
+            KEY_PASSPHRASE: ${{ secrets.KEY_PASSPHRASE }}
+        run: |
+            python get_new_package.py || exit 0
+            ls -l debian/pool
+            make debian/Release.gpg
+      - name: Commit and push if changed
+        run: |-
+            git diff
+            git config --global user.email "repo-bot@example.com"
+            git config --global user.name "repo-bot"
+            git add -A
+            git commit -m "Add new discord file" || exit 0
+            git push
