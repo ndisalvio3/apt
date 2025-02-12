@@ -34,7 +34,7 @@ jobs:
         env: 
             KEY_PASSPHRASE: ${{ secrets.KEY_PASSPHRASE }}
         run: |
-            cd /home/runner/work/apt/
+            ls -la
             python get_new_package.py || exit 0
             ls -l debian/pool
             make debian/Release.gpg
