@@ -44,7 +44,8 @@ jobs:
           pip install -r requirements.txt
       - name: Update packages
         run: |
-            python ./get_new_package.py --force
+            cd /home/runner/work/apt/
+            python get_new_package.py --force
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
