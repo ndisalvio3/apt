@@ -38,6 +38,7 @@ jobs:
         with:
           python-version: 3.13
           cache: 'pip'
+          working-directory: ${{ github.workspace }}/${{ env.PROJECT_PATH }}
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip

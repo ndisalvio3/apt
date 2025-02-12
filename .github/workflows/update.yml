@@ -17,7 +17,7 @@ jobs:
           token: ${{ secrets.GITHUB_TOKEN }} 
       - name: Import key
         env: 
-          # Imported using `gpg --export-secret-key "Discord Apt Repository" | base64 > private.pgp`
+          # Imported using `gpg --export-secret-key "Universal Apt Repository" | base64 > private.pgp`
           PRIVATE_KEY: ${{ secrets.PRIVATE_KEY }}      
         run: |
           echo -n "$PRIVATE_KEY" | base64 --decode | gpg --pinentry-mode loopback --batch --import
