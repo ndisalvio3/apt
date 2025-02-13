@@ -6,7 +6,7 @@
     <title>APT Repository Browser</title>
     <style>
         body { font-family: Arial, sans-serif; margin: 20px; }
-        #file-list, #package-list { margin-top: 20px; }
+        #file-list, #Packages { margin-top: 20px; }
         .entry { padding: 5px; display: block; text-decoration: none; color: blue; }
         .entry:hover { text-decoration: underline; }
     </style>
@@ -73,7 +73,7 @@
 
         async function fetchPackages() {
             const repoUrl = REPO_URL + currentPath + 'Packages';
-            const packageList = document.getElementById('package-list');
+            const packageList = document.getElementById('Packages');
             packageList.innerHTML = '<p>Loading...</p>';
 
             try {
