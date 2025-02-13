@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>APT Repository Browser</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        button { padding: 10px; cursor: pointer; }
+        #file-list, #package-list { margin-top: 20px; }
+        .entry { padding: 10px; border-bottom: 1px solid #ddd; cursor: pointer; }
+        .entry:hover { background-color: #f0f0f0; }
+    </style>
+</head>
+<body>
+    <h1>APT Repository Browser</h1>
+    <button onclick="fetchDirectory()">Fetch Directory</button>
+    <div id="file-list"></div>
+    <div id="package-list"></div>
+
+    <script>
+        const REPO_URL = "https://apt.hostmc4free.com";
+        let currentPath = "/";
+
+        async function fetchDirectory(path = '') {
+            currentPath = path;
+            const repoUrl = REPO_URL + path;
+            const fileList = document.getElementById('file-list');
+            fileList.innerHTML = '<p>Loading...</p>';
+
+            try {
+                const response = await fetch(repoUrl);
+                if (!response.ok) throw new Error('Failed to fetch directory listing');
+                const text = await response.text();
+                
+                const entries = parseDirectory(text);
+                displayDirectory(entries);
+                fetchPackages();
+            } catch (error) {
+                fileList.innerHTML = `<p style="color: red;">Error: ${error.message}</p>`;
+            }
+        }
+
+        function parseDirectory(html) {
+            const parser = new DOMParser();
+            const doc = parser.parseFromString(html, 'text/html');
+            const links = Array.from(doc.querySelectorAll('a'));
+            return links.map(link => ({
+                name: link.textContent,
+                url: link.getAttribute('href')
+            })).filter(entry => entry.name !== '../');
+        }
+
+        function displayDirectory(entries) {
+            const fileList = document.getElementById('file-list');
+            fileList.innerHTML = '';
+            
+            entries.forEach(entry => {
+                const div = document.createElement('div');
+                div.className = 'entry';
+                div.textContent = entry.name;
+                div.onclick = () => {
+                    if (entry.name.endsWith('/')) {
+                        fetchDirectory(currentPath + entry.url);
+                    }
+                };
+                fileList.appendChild(div);
+            });
+        }
+
+        async function fetchPackages() {
+            const repoUrl = REPO_URL + currentPath + 'Packages';
+            const packageList = document.getElementById('package-list');
+            packageList.innerHTML = '<p>Loading...</p>';
+
+            try {
+                const response = await fetch(repoUrl);
+                if (!response.ok) {
+                    packageList.innerHTML = '<p>No package list found in this directory.</p>';
+                    return;
+                }
+                const text = await response.text();
+                
+                const packages = parsePackages(text);
+                displayPackages(packages);
+            } catch (error) {
+                packageList.innerHTML = `<p style="color: red;">Error: ${error.message}</p>`;
+            }
+        }
+
+        function parsePackages(text) {
+            return text.split('\n\n').map(block => {
+                const lines = block.split('\n');
+                let pkg = {};
+                lines.forEach(line => {
+                    let match = line.match(/^(.*?):\s*(.*)$/);
+                    if (match) pkg[match[1]] = match[2];
+                });
+                return pkg;
+            }).filter(pkg => pkg.Package);
+        }
+
+        function displayPackages(packages) {
+            const packageList = document.getElementById('package-list');
+            packageList.innerHTML = '';
+            
+            packages.forEach(pkg => {
+                const div = document.createElement('div');
+                div.className = 'entry';
+                div.innerHTML = `<strong>${pkg.Package}</strong> - ${pkg.Version}<br><small>${pkg.Description || 'No description'}</small>`;
+                packageList.appendChild(div);
+            });
+        }
+    </script>
+</body>
+</html>
