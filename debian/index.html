@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>APT Repository Browser</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        #repo-url { width: 80%; padding: 10px; }
+        button { padding: 10px; cursor: pointer; }
+        #package-list { margin-top: 20px; }
+        .package { border-bottom: 1px solid #ddd; padding: 10px; }
+    </style>
+</head>
+<body>
+    <h1>APT Repository Browser</h1>
+    <input type="text" id="repo-url" placeholder="Enter APT Repository URL" value="http://archive.ubuntu.com/ubuntu/dists/focal/main/binary-amd64/">
+    <button onclick="fetchPackages()">Fetch Packages</button>
+    <div id="package-list"></div>
+
+    <script>
+        async function fetchPackages() {
+            const repoUrl = document.getElementById('repo-url').value;
+            const packageList = document.getElementById('package-list');
+            packageList.innerHTML = '<p>Loading...</p>';
+
+            try {
+                const response = await fetch(`${repoUrl}Packages`);
+                if (!response.ok) throw new Error('Failed to fetch Packages file');
+                const text = await response.text();
+                
+                const packages = parsePackages(text);
+                displayPackages(packages);
+            } catch (error) {
+                packageList.innerHTML = `<p style="color: red;">Error: ${error.message}</p>`;
+            }
+        }
+
+        function parsePackages(text) {
+            return text.split('\n\n').map(block => {
+                const lines = block.split('\n');
+                let pkg = {};
+                lines.forEach(line => {
+                    let match = line.match(/^(.*?):\s*(.*)$/);
+                    if (match) pkg[match[1]] = match[2];
+                });
+                return pkg;
+            }).filter(pkg => pkg.Package);
+        }
+
+        function displayPackages(packages) {
+            const packageList = document.getElementById('package-list');
+            packageList.innerHTML = '';
+            
+            packages.forEach(pkg => {
+                const div = document.createElement('div');
+                div.className = 'package';
+                div.innerHTML = `<strong>${pkg.Package}</strong> - ${pkg.Version}<br><small>${pkg.Description || 'No description'}</small>`;
+                packageList.appendChild(div);
+            });
+        }
+    </script>
+</body>
+</html>
