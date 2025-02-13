@@ -15,6 +15,7 @@
     <h1>APT Repository Browser</h1>
     <div id="file-list"></div>
     <div id="package-list"></div>
+    
 
     <script>
         const REPO_URL = "https://apt.hostmc4free.com";
@@ -33,7 +34,7 @@
                 
                 const entries = parseDirectory(text);
                 displayDirectory(entries);
-                fetchPackages();
+                
             } catch (error) {
                 fileList.innerHTML = `<p style="color: red;">Error: ${error.message}</p>`;
             }
@@ -71,17 +72,7 @@
             });
         }
 
-        async function fetchPackages() {
-            const repoUrl = REPO_URL + currentPath + 'Packages';
-            const packageList = document.getElementById('Packages');
-            packageList.innerHTML = '<p>Loading...</p>';
-
-            try {
-                const response = await fetch(repoUrl);
-                if (!response.ok) {
-                    packageList.innerHTML = '<p>No package list found in this directory.</p>';
-                    return;
-                }
+        
                 const text = await response.text();
                 
                 const packages = parsePackages(text);
