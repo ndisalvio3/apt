@@ -17,7 +17,7 @@ pool_main = debian / "pool" / "main"
 pool_main.mkdir(parents=True, exist_ok=True)
 
 # The Packages file is expected in the standard location.
-packages_file = debian / "dists" / "myrepo" / "main" / "binary-amd64" / "Packages"
+packages_file = debian / "dists" / "universal-apt" / "main" / "binary-amd64" / "Packages"
 if packages_file.exists():
     packages_content = packages_file.read_text()
 else:
