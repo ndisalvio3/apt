@@ -14,6 +14,11 @@
         "name": "discord-canary",
         "url": "https://discord.com/api/download/canary?platform=linux&format=deb",
         "package_json": "package-lists/discord/canary_packages.json"
+      },
+      {
+        "name": "Surrealist",
+        "url": "https://github.com/surrealdb/surrealist/releases/latest",
+        "package_json": "package-lists/surrealist/packages.json"
       }
     ]
   }
