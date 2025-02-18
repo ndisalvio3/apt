@@ -13,7 +13,7 @@ all: packages packages.gz
 # Generate the Packages file from all .deb files in the pool
 $(DIST_DIR)/Packages: $(DEB_FILES)
 	@mkdir -p $(DIST_DIR)
-	dpkg-scanpackages $(POOL_DIR) /dev/null > $(DIST_DIR)/Packages
+	dpkg-scanpackages $(POOL_DIR) /dev/null "pool/main" > $(DIST_DIR)/Packages
 
 .PHONY: packages
 packages: $(DIST_DIR)/Packages
