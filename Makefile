@@ -3,6 +3,7 @@
 # Directories
 POOL_DIR := debian/pool/main
 DIST_DIR := debian/dists/universal-apt/main/binary-amd64
+DISTS := debian/dists/universal-apt
 
 # Automatically find all .deb files in the pool
 DEB_FILES := $(wildcard $(POOL_DIR)/*.deb)
@@ -24,20 +25,20 @@ packages: $(DIST_DIR)/Packages
 packages.gz: $(DIST_DIR)/Packages
 	gzip -9c $(DIST_DIR)/Packages > $(DIST_DIR)/Packages.gz
 
-# Generate the Release file using apt-ftparchive
-debian/Release:
+# Generate the Release file in the correct directory
+$(DISTS)/Release:
 	@echo "Generating Release file..."
-	apt-ftparchive release debian/dists/universal-apt > debian/Release
+	apt-ftparchive release $(DISTS) > $(DISTS)/Release
 
 # Sign the Release file with GPG using your key ("Nicholas Disalvio")
-debian/Release.gpg: debian/Release
-	cd debian && rm -f Release.gpg && \
+$(DISTS)/Release.gpg: $(DISTS)/Release
+	cd $(DISTS) && rm -f Release.gpg && \
 		(echo "${KEY_PASSPHRASE}" | gpg --pinentry-mode loopback --passphrase-fd 0 -abs -o Release.gpg --local-user "Nicholas Disalvio" Release)
 
 .PHONY: release
-release: debian/Release.gpg
+release: $(DISTS)/Release.gpg
 
 # Clean generated files
 .PHONY: clean
 clean:
-	rm -f $(DIST_DIR)/Packages $(DIST_DIR)/Packages.gz debian/Release debian/Release.gpg
+	rm -f $(DIST_DIR)/Packages $(DIST_DIR)/Packages.gz $(DISTS)/Release $(DISTS)/Release.gpg
