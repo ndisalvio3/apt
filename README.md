@@ -9,6 +9,14 @@ To use just run
 Then just install your package eg. 
 ```apt install discord```
 
+**Current Packages**
+```
+discord
+discord-ptb
+discord-canary
+surrealist
+```
+
 **To add new package modify sources.json via the following**
 
 **Github repository**
