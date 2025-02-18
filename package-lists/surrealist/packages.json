@@ -1,3 +1,0 @@
-{
-  "*.deb": "https://github.com/surrealdb/surrealist/releases/download/surrealist-v3.2.2/*.deb"
-}

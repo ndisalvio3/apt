@@ -17,7 +17,7 @@ pool_main = debian / "pool" / "main"
 pool_main.mkdir(parents=True, exist_ok=True)
 
 # The Packages file is expected in the standard location.
-packages_file = debian / "dists" / "universal-apt" / "main" / "binary-amd64" / "Packages"
+packages_file = debian / "dists" / "myrepo" / "main" / "binary-amd64" / "Packages"
 if packages_file.exists():
     packages_content = packages_file.read_text()
 else:
@@ -38,19 +38,34 @@ def load_package_tracker(json_package_path: str) -> dict:
         with pkg_path.open() as f:
             return json.load(f)
     except json.JSONDecodeError:
-        # If the file exists but is empty or malformed, reset it
         return {}
+
+def get_github_latest_deb(api_url: str) -> (str, str):
+    """
+    Retrieve the latest release info from GitHub and return a tuple:
+    (filename, download_url) for the first asset ending with .deb.
+    """
+    response = requests.get(api_url)
+    response.raise_for_status()
+    data = response.json()
+    for asset in data.get("assets", []):
+        if asset["name"].endswith(".deb"):
+            return asset["name"], asset["browser_download_url"]
+    raise Exception("No .deb asset found in the latest release from GitHub")
 
 def missing_packages(base_url: str) -> bool:
     """
     Check if the package at base_url is missing from our Packages file,
     or if '--force' was passed on the command line.
     """
-    initial_req = requests.get(base_url, allow_redirects=False)
-    initial_req.raise_for_status()
-    # Use the Location header if available, otherwise use base_url
-    final_url = initial_req.headers.get("Location", base_url)
-    filename = final_url.split("/")[-1]
+    # If the URL is from GitHub, use the GitHub API
+    if "api.github.com/repos" in base_url:
+        filename, _ = get_github_latest_deb(base_url)
+    else:
+        r = requests.get(base_url, allow_redirects=False)
+        r.raise_for_status()
+        final_url = r.headers.get("Location", base_url)
+        filename = final_url.split("/")[-1]
     return filename not in packages_content or ("--force" in argv)
 
 def get_all_packages(json_package_path: str, base_url: str) -> None:
@@ -58,10 +73,13 @@ def get_all_packages(json_package_path: str, base_url: str) -> None:
     For a given source (specified by its package tracker JSON and base_url),
     download any new package that isn't already tracked.
     """
-    initial_req = requests.get(base_url, allow_redirects=False)
-    initial_req.raise_for_status()
-    final_url = initial_req.headers.get("Location", base_url)
-    filename = final_url.split("/")[-1]
+    if "api.github.com/repos" in base_url:
+        filename, final_url = get_github_latest_deb(base_url)
+    else:
+        r = requests.get(base_url, allow_redirects=False)
+        r.raise_for_status()
+        final_url = r.headers.get("Location", base_url)
+        filename = final_url.split("/")[-1]
 
     # Load (or create) the JSON tracker file
     existing_packages = load_package_tracker(json_package_path)
@@ -76,7 +94,7 @@ def get_all_packages(json_package_path: str, base_url: str) -> None:
             del existing_packages[oldest_key]
         with Path(json_package_path).open("w") as f:
             json.dump(existing_packages, f, indent=2)
-
+    
     # Download any package in our tracker that is not already in pool_main
     for pkg_name, pkg_url in existing_packages.items():
         local_path = pool_main / pkg_name

@@ -17,7 +17,7 @@
       },
       {
         "name": "Surrealist",
-        "url": "https://github.com/surrealdb/surrealist/releases/latest/download/*.deb",
+        "url": "https://github.com/surrealdb/surrealist/releases/latest",
         "package_json": "package-lists/surrealist/packages.json"
       }
     ]
