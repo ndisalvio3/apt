@@ -6,17 +6,17 @@ DISTS := debian/dists/universal-apt
 # Default target: generate Packages, Packages.gz, and Release files
 all: packages packages.gz release
 
-# Generate Packages file with correct prefix
-$(DIST_DIR)/Packages: $(wildcard $(POOL_DIR)/*.deb)
-	@mkdir -p $(DIST_DIR)
-	dpkg-scanpackages $(POOL_DIR) /dev/null "pool/main" > $(DIST_DIR)/Packages
+# Generate Packages file with correct prefix by running inside the debian folder
+$(DIST_DIR)/Packages:
+	@cd debian && mkdir -p dists/universal-apt/main/binary-amd64 && \
+	    dpkg-scanpackages pool/main /dev/null "pool/main" > dists/universal-apt/main/binary-amd64/Packages
 
 .PHONY: packages
 packages: $(DIST_DIR)/Packages
 
 .PHONY: packages.gz
 packages.gz: $(DIST_DIR)/Packages
-	gzip -9c $(DIST_DIR)/Packages > $(DIST_DIR)/Packages.gz
+	@cd debian && gzip -9c dists/universal-apt/main/binary-amd64/Packages > dists/universal-apt/main/binary-amd64/Packages.gz
 
 # Generate the Release file in the correct directory
 $(DISTS)/Release:
