@@ -1,0 +1,72 @@
+Package: discord
+Version: 0.0.85
+Architecture: amd64
+Maintainer: Discord Maintainer Team <native-team@discord.com>
+Installed-Size: 253872
+Depends: libc6, libasound2, libatomic1, libnotify4, libnspr4, libnss3, libstdc++6, libxss1, libxtst6
+Recommends: libappindicator1 | libayatana-appindicator1
+Filename: debian/pool/main/discord-0.0.85.deb
+Size: 101320550
+MD5sum: e37ab3ac9c70ce30287baa7f87fdd9d7
+SHA1: 92521173130b38c644b0b990f07682cdc9131a79
+SHA256: d43bb67859ea25b2d65ba09c4ae48f4874cc3068345b8ca14ba6ba1f02c8fa6d
+Section: net
+Priority: optional
+Homepage: https://discord.com
+Description: Chat for Communities and Friends
+ Discord is the easiest way to communicate over voice, video, and text. Chat,
+ hang out, and stay close with your friends and communities.
+
+Package: discord-canary
+Version: 0.0.591
+Architecture: amd64
+Maintainer: Discord Maintainer Team <native-team@discord.com>
+Installed-Size: 255548
+Depends: libc6, libasound2, libatomic1, libnotify4, libnspr4, libnss3, libstdc++6, libxss1, libxtst6
+Recommends: libappindicator1 | libayatana-appindicator1
+Filename: debian/pool/main/discord-canary-0.0.591.deb
+Size: 101944364
+MD5sum: f5492152b4acc5e20798ecc7a180e47a
+SHA1: 3a01b21ba27f88cea3dfe9c2c7dab3805436c587
+SHA256: af722d3d25fabcfacc58200626d20338b3525f3319a3135daf17d113b8914635
+Section: net
+Priority: optional
+Homepage: https://discord.com
+Description: Chat for Communities and Friends
+ Discord is the easiest way to communicate over voice, video, and text. Chat,
+ hang out, and stay close with your friends and communities.
+
+Package: discord-ptb
+Version: 0.0.131
+Architecture: amd64
+Maintainer: Discord Maintainer Team <native-team@discord.com>
+Installed-Size: 255516
+Depends: libc6, libasound2, libatomic1, libnotify4, libnspr4, libnss3, libstdc++6, libxss1, libxtst6
+Recommends: libappindicator1 | libayatana-appindicator1
+Filename: debian/pool/main/discord-ptb-0.0.131.deb
+Size: 101911148
+MD5sum: 80fdaeae2458723866c82dadcfcf0a69
+SHA1: 2fbea2b1e25b456cf78b9e99872e996c24c4d09a
+SHA256: c72f124a456d5eafc14dfa28650c53c2241ddf459f1978667561476da94938a0
+Section: net
+Priority: optional
+Homepage: https://discord.com
+Description: Chat for Communities and Friends
+ Discord is the easiest way to communicate over voice, video, and text. Chat,
+ hang out, and stay close with your friends and communities.
+
+Package: surrealist
+Version: 3.2.2
+Architecture: amd64
+Maintainer: SurrealDB
+Installed-Size: 35385
+Depends: libwebkit2gtk-4.1-0, libgtk-3-0
+Filename: debian/pool/main/Surrealist_3.2.2_amd64.deb
+Size: 17303312
+MD5sum: d587abee4fdacde7d8d6b43af6051234
+SHA1: 384f0c44506837bbc67ae0368e0bc8e93a6431dd
+SHA256: 831f82c20c96c9251a2bdff9d96aed7354d9273206f13b52abf768383623ce28
+Priority: optional
+Description: (none)
+ (none)
+
