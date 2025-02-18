@@ -11,7 +11,7 @@ MAX_PACKAGES = 3
 # Apt repo layout
 debian_dir = root / "debian"
 pool_main = debian_dir / "pool" / "main"
-packages_file = debian_dir / "dists" / "myrepo" / "main" / "binary-amd64" / "Packages"
+packages_file = debian_dir / "dists" / "universal-apt" / "main" / "binary-amd64" / "Packages"
 
 pool_main.mkdir(parents=True, exist_ok=True)
 packages_file.parent.mkdir(parents=True, exist_ok=True)

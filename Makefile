@@ -1,14 +1,29 @@
-debian/Packages: debian/pool/*.deb
-	cd debian && dpkg-scanpackages --multiversion . > Packages
+# New Makefile for building a standard apt repository
 
-debian/Packages.gz: debian/Packages
-	cd debian && gzip -9c Packages > Packages.gz
+# Directories
+POOL_DIR := debian/pool/main
+DIST_DIR := debian/dists/universal-apt/main/binary-amd64
 
-debian/Release: debian/Packages debian/Packages.gz
-	cd debian && apt-ftparchive release . > Release
+# Automatically find all .deb files in the pool
+DEB_FILES := $(wildcard $(POOL_DIR)/*.deb)
 
-debian/Release.gz: debian/Release
-	cd debian && gzip -9c Release > Release.gz
+# Default target: generate both Packages and Packages.gz
+all: packages packages.gz
 
-debian/Release.gpg: debian/Release
-	cd debian && rm -f Release.gpg && (echo "${KEY_PASSPHRASE}" | gpg --pinentry-mode loopback --passphrase-fd 0 -abs -o Release.gpg --local-user "Nicholas Disalvio" Release)
+# Generate the Packages file from all .deb files in the pool
+$(DIST_DIR)/Packages: $(DEB_FILES)
+	@mkdir -p $(DIST_DIR)
+	dpkg-scanpackages $(POOL_DIR) /dev/null > $(DIST_DIR)/Packages
+
+.PHONY: packages
+packages: $(DIST_DIR)/Packages
+
+# Compress the Packages file to create Packages.gz
+.PHONY: packages.gz
+packages.gz: $(DIST_DIR)/Packages
+	gzip -9c $(DIST_DIR)/Packages > $(DIST_DIR)/Packages.gz
+
+# Clean generated files
+.PHONY: clean
+clean:
+	rm -f $(DIST_DIR)/Packages $(DIST_DIR)/Packages.gz
