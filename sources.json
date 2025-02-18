@@ -3,18 +3,17 @@
       {
         "name": "discord-stable",
         "url": "https://discord.com/api/download?platform=linux&format=deb",
-        "package_json": "discord_stable_packages.json"
+        "package_json": "/package-lists/discord/stable_packages.json"
       },
       {
         "name": "discord-ptb",
         "url": "https://discord.com/api/download/ptb?platform=linux&format=deb",
-        "package_json": "discord_ptb_packages.json"
+        "package_json": "/package-lists/discord/ptb_packages.json"
       },
       {
         "name": "discord-canary",
         "url": "https://discord.com/api/download/canary?platform=linux&format=deb",
-        "package_json": "discord_canary_packages.json"
+        "package_json": "/package-lists/discord/canary_packages.json"
       }
     ]
   }
-  
