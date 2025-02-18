@@ -11,7 +11,7 @@ DEB_FILES := $(wildcard $(POOL_DIR)/*.deb)
 all: packages packages.gz release
 
 # Generate the Packages file from all .deb files in the pool,
-# and force the filenames to be prefixed correctly.
+# forcing filenames to be prefixed as "pool/main".
 $(DIST_DIR)/Packages: $(DEB_FILES)
 	@mkdir -p $(DIST_DIR)
 	dpkg-scanpackages $(POOL_DIR) /dev/null "pool/main" > $(DIST_DIR)/Packages
@@ -25,17 +25,17 @@ packages.gz: $(DIST_DIR)/Packages
 	gzip -9c $(DIST_DIR)/Packages > $(DIST_DIR)/Packages.gz
 
 # Generate the Release file using apt-ftparchive
-debian/Release: 
+debian/Release:
 	@echo "Generating Release file..."
 	apt-ftparchive release debian/dists/universal-apt > debian/Release
 
-# Sign the Release file with GPG using your key (Nicholas Disalvio)
+# Sign the Release file with GPG using your key ("Nicholas Disalvio")
 debian/Release.gpg: debian/Release
 	cd debian && rm -f Release.gpg && \
 		(echo "${KEY_PASSPHRASE}" | gpg --pinentry-mode loopback --passphrase-fd 0 -abs -o Release.gpg --local-user "Nicholas Disalvio" Release)
 
 .PHONY: release
-release: debian/Release.debian/Release.gpg
+release: debian/Release.gpg
 
 # Clean generated files
 .PHONY: clean
