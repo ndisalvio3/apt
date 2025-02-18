@@ -36,7 +36,7 @@ jobs:
         run: |
             python get_new_packages.py || exit 0
             ls -l debian/pool
-            make debian/Release.gpg
+            make all
       - name: Commit and push if changed
         run: |-
             git diff
