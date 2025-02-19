@@ -4,6 +4,7 @@ from pathlib import Path
 import shutil
 import requests
 from sys import exit, argv
+from typing import List, Tuple
 
 # Maximum number of packages to keep per source
 MAX_PACKAGES = 3
@@ -39,24 +40,6 @@ def load_package_tracker(json_package_path: str) -> dict:
             return json.load(f)
     except json.JSONDecodeError:
         return {}
-from typing import List, Tuple
-
-def get_all_github_debs(api_url: str) -> List[Tuple[str, str]]:
-    """
-    Retrieve the latest release info from GitHub and return a list of tuples:
-    (filename, download_url) for all assets ending with .deb.
-    """
-    response = requests.get(api_url)
-    response.raise_for_status()
-    data = response.json()
-    deb_assets = []
-    for asset in data.get("assets", []):
-        if asset["name"].endswith(".deb"):
-            deb_assets.append((asset["name"], asset["browser_download_url"]))
-    if not deb_assets:
-        raise Exception("No .deb asset found in the latest release from GitHub")
-    return deb_assets
-from typing import List, Tuple
 
 def get_all_github_debs(api_url: str) -> List[Tuple[str, str]]:
     """
@@ -76,47 +59,54 @@ def get_all_github_debs(api_url: str) -> List[Tuple[str, str]]:
 
 def missing_packages(base_url: str) -> bool:
     """
-    Check if the package at base_url is missing from our Packages file,
+    Check if any .deb asset from the GitHub release at base_url is missing from our Packages file,
     or if '--force' was passed on the command line.
     """
-    # If the URL is from GitHub, use the GitHub API
     if "api.github.com/repos" in base_url:
-        filename, _ = get_github_latest_deb(base_url)
+        deb_list = get_all_github_debs(base_url)
+        # Return True if at least one asset isn't in our packages_content
+        missing = any(filename not in packages_content for filename, _ in deb_list)
+        return missing or ("--force" in argv)
     else:
+        # For non-GitHub URLs, use a simple HEAD-like request.
         r = requests.get(base_url, allow_redirects=False)
         r.raise_for_status()
         final_url = r.headers.get("Location", base_url)
         filename = final_url.split("/")[-1]
-    return filename not in packages_content or ("--force" in argv)
+        return filename not in packages_content or ("--force" in argv)
 
 def get_all_packages(json_package_path: str, base_url: str) -> None:
     """
     For a given source (specified by its package tracker JSON and base_url),
-    download any new package that isn't already tracked.
+    update the tracker with all .deb assets and download any new packages.
     """
     if "api.github.com/repos" in base_url:
-        filename, final_url = get_github_latest_deb(base_url)
+        deb_list = get_all_github_debs(base_url)
     else:
         r = requests.get(base_url, allow_redirects=False)
         r.raise_for_status()
         final_url = r.headers.get("Location", base_url)
-        filename = final_url.split("/")[-1]
-
+        deb_list = [(final_url.split("/")[-1], final_url)]
+    
     # Load (or create) the JSON tracker file
     existing_packages = load_package_tracker(json_package_path)
-
-    # If the package isn't in our global Packages content or if --force was given,
-    # update the tracker.
-    if filename not in packages_content or ("--force" in argv):
-        existing_packages[filename] = final_url
-        sorted_keys = sorted(existing_packages.keys())
-        while len(existing_packages) > MAX_PACKAGES:
-            oldest_key = sorted_keys.pop(0)
-            del existing_packages[oldest_key]
-        with Path(json_package_path).open("w") as f:
-            json.dump(existing_packages, f, indent=2)
     
-    # Download any package in our tracker that is not already in pool_main
+    # Update the tracker with all deb assets from GitHub.
+    for filename, download_url in deb_list:
+        if filename not in packages_content or ("--force" in argv):
+            existing_packages[filename] = download_url
+    
+    # Optionally, prune tracker if it has too many entries.
+    sorted_keys = sorted(existing_packages.keys())
+    while len(existing_packages) > MAX_PACKAGES:
+        oldest_key = sorted_keys.pop(0)
+        del existing_packages[oldest_key]
+    
+    # Save updated tracker.
+    with Path(json_package_path).open("w") as f:
+        json.dump(existing_packages, f, indent=2)
+    
+    # Download packages that are not already in pool_main.
     for pkg_name, pkg_url in existing_packages.items():
         local_path = pool_main / pkg_name
         if local_path.exists():
