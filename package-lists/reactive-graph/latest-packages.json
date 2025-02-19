@@ -1,0 +1,5 @@
+{
+  "reactive-graph_0.10.0-nightly_ppc64.deb": "https://github.com/reactive-graph/reactive-graph/releases/download/nightly/reactive-graph_0.10.0-nightly_ppc64.deb",
+  "reactive-graph_0.10.0-nightly_ppc64el.deb": "https://github.com/reactive-graph/reactive-graph/releases/download/nightly/reactive-graph_0.10.0-nightly_ppc64el.deb",
+  "reactive-graph_0.10.0-nightly_riscv64.deb": "https://github.com/reactive-graph/reactive-graph/releases/download/nightly/reactive-graph_0.10.0-nightly_riscv64.deb"
+}
