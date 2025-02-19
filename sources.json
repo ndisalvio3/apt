@@ -29,7 +29,7 @@
         "name": "GlobalProtect",
         "url": "https://api.github.com/repos/yuezk/GlobalProtect-openconnect/releases/latest",
         "package_json": "package-lists/GlobalProtect/packages.json"
-      }
+      },
       {
         "name": "reactive-graph-latest",
         "url": "https://api.github.com/repos/reactive-graph/reactive-graph/releases/latest",
