@@ -54,7 +54,7 @@ jobs:
 
       - name: Build repository metadata
         env: 
-           PRIVATE_KEY: ${{ secrets.PRIVATE_KEY }}
+           KEY_PASSPHRASE: ${{ secrets.KEY_PASSPHRASE }}
         run: make all
 
       - name: List artifact files
