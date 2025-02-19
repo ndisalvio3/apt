@@ -6,8 +6,8 @@ import requests
 from sys import exit, argv
 from typing import List, Tuple
 
-# Maximum number of packages to keep per source
-MAX_PACKAGES = 3
+# (Optional) Remove the MAX_PACKAGES constant if it's no longer used.
+# MAX_PACKAGES = 3
 
 # Determine the repository root (assumes this script is in the repo)
 root = Path(__file__).parent
@@ -96,11 +96,7 @@ def get_all_packages(json_package_path: str, base_url: str) -> None:
         if filename not in packages_content or ("--force" in argv):
             existing_packages[filename] = download_url
     
-    # Optionally, prune tracker if it has too many entries.
-    sorted_keys = sorted(existing_packages.keys())
-    while len(existing_packages) > MAX_PACKAGES:
-        oldest_key = sorted_keys.pop(0)
-        del existing_packages[oldest_key]
+    # (Removed pruning code so that all packages are kept.)
     
     # Save updated tracker.
     with Path(json_package_path).open("w") as f:
