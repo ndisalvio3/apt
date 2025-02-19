@@ -16,6 +16,7 @@ discord-ptb
 discord-canary
 surrealist
 flowkeeper
+globalprotect-openconnect
 ```
 
 **To add new package modify sources.json via the following**
