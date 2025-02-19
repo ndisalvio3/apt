@@ -6,10 +6,10 @@ DISTS := debian/dists/universal-apt
 # Default target: generate Packages, Packages.gz, and Release files
 all: packages packages.gz release
 
-# Generate Packages file by running inside the debian folder (without the extra prefix)
+# Generate Packages file by running inside the debian folder, using an empty prefix
 $(DIST_DIR)/Packages:
 	@cd debian && mkdir -p dists/universal-apt/main/binary-amd64 && \
-	    dpkg-scanpackages pool/main /dev/null > dists/universal-apt/main/binary-amd64/Packages
+	    dpkg-scanpackages pool/main /dev/null "" > dists/universal-apt/main/binary-amd64/Packages
 
 .PHONY: packages
 packages: $(DIST_DIR)/Packages
