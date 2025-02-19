@@ -25,7 +25,8 @@ jobs:
       - name: Import key
         env: 
           # Imported using `gpg --export-secret-key "Universal Apt Repository" | base64 > private.pgp`
-          PRIVATE_KEY: ${{ secrets.PRIVATE_KEY }}      
+          PRIVATE_KEY: ${{ secrets.PRIVATE_KEY }}   
+          KEY_PASSPHRASE: ${{ secrets.KEY_PASSPHRASE }}
         run: |
           echo -n "$PRIVATE_KEY" | base64 --decode | gpg --pinentry-mode loopback --batch --import
           
