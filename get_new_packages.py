@@ -39,19 +39,40 @@ def load_package_tracker(json_package_path: str) -> dict:
             return json.load(f)
     except json.JSONDecodeError:
         return {}
+from typing import List, Tuple
 
-def get_github_latest_deb(api_url: str) -> (str, str):
+def get_all_github_debs(api_url: str) -> List[Tuple[str, str]]:
     """
-    Retrieve the latest release info from GitHub and return a tuple:
-    (filename, download_url) for the first asset ending with .deb.
+    Retrieve the latest release info from GitHub and return a list of tuples:
+    (filename, download_url) for all assets ending with .deb.
     """
     response = requests.get(api_url)
     response.raise_for_status()
     data = response.json()
+    deb_assets = []
     for asset in data.get("assets", []):
         if asset["name"].endswith(".deb"):
-            return asset["name"], asset["browser_download_url"]
-    raise Exception("No .deb asset found in the latest release from GitHub")
+            deb_assets.append((asset["name"], asset["browser_download_url"]))
+    if not deb_assets:
+        raise Exception("No .deb asset found in the latest release from GitHub")
+    return deb_assets
+from typing import List, Tuple
+
+def get_all_github_debs(api_url: str) -> List[Tuple[str, str]]:
+    """
+    Retrieve the latest release info from GitHub and return a list of tuples:
+    (filename, download_url) for all assets ending with .deb.
+    """
+    response = requests.get(api_url)
+    response.raise_for_status()
+    data = response.json()
+    deb_assets = []
+    for asset in data.get("assets", []):
+        if asset["name"].endswith(".deb"):
+            deb_assets.append((asset["name"], asset["browser_download_url"]))
+    if not deb_assets:
+        raise Exception("No .deb asset found in the latest release from GitHub")
+    return deb_assets
 
 def missing_packages(base_url: str) -> bool:
     """
