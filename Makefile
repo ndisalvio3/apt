@@ -21,7 +21,7 @@ packages.gz: $(DIST_DIR)/Packages
 # Generate the Release file using the configuration file (apt-ftparchive.conf must be in the repo root)
 $(DISTS)/Release:
 	@echo "Generating Release file..."
-	apt-ftparchive -c=apt-ftparchive.conf release $(DISTS) > $(DISTS)/Release
+	apt-ftparchive -c=apt-ftparchive.conf release $(DISTS) --multiversion > $(DISTS)/Release
 
 # Sign the Release file with GPG using your key (use the correct key identifier)
 $(DISTS)/Release.gpg: $(DISTS)/Release
