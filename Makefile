@@ -18,12 +18,12 @@ packages: $(DIST_DIR)/Packages
 packages.gz: $(DIST_DIR)/Packages
 	@cd debian && gzip -9c dists/universal-apt/main/binary-amd64/Packages > dists/universal-apt/main/binary-amd64/Packages.gz
 
-# Generate the Release file in the correct directory
+# Generate the Release file using the configuration file (apt-ftparchive.conf must be in the repo root)
 $(DISTS)/Release:
 	@echo "Generating Release file..."
-	apt-ftparchive release $(DISTS) > $(DISTS)/Release
+	apt-ftparchive -c=apt-ftparchive.conf release $(DISTS) > $(DISTS)/Release
 
-# Sign the Release file with GPG using your key
+# Sign the Release file with GPG using your key (use the correct key identifier)
 $(DISTS)/Release.gpg: $(DISTS)/Release
 	cd $(DISTS) && rm -f Release.gpg && \
 		(echo "${KEY_PASSPHRASE}" | gpg --pinentry-mode loopback --passphrase-fd 0 -abs -o Release.gpg --local-user "Nicholas Disalvio" Release)
