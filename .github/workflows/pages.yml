@@ -22,6 +22,13 @@ jobs:
       url: ${{ steps.deployment.outputs.page_url }}
     runs-on: ubuntu-latest
     steps:
+      - name: Import key
+        env: 
+          # Imported using `gpg --export-secret-key "Universal Apt Repository" | base64 > private.pgp`
+          PRIVATE_KEY: ${{ secrets.PRIVATE_KEY }}      
+        run: |
+          echo -n "$PRIVATE_KEY" | base64 --decode | gpg --pinentry-mode loopback --batch --import
+          
       - name: Checkout repository
         uses: actions/checkout@v4
 
