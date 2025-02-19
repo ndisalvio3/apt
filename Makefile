@@ -6,11 +6,10 @@ DISTS := debian/dists/universal-apt
 # Default target: generate Packages, Packages.gz, and Release files
 all: packages packages.gz release
 
-# Generate Packages file by running inside the debian folder.
-# We use --multiversion with dpkg-scanpackages so that all .deb files with duplicate package names are included.
+# Generate Packages file by running inside the debian folder
 $(DIST_DIR)/Packages:
 	@cd debian && mkdir -p dists/universal-apt/main/binary-amd64 && \
-	    dpkg-scanpackages pool/main /dev/null --multiversion "" > dists/universal-apt/main/binary-amd64/Packages
+	    dpkg-scanpackages --multiversion pool/main /dev/null "" > dists/universal-apt/main/binary-amd64/Packages
 
 .PHONY: packages
 packages: $(DIST_DIR)/Packages
@@ -19,7 +18,7 @@ packages: $(DIST_DIR)/Packages
 packages.gz: $(DIST_DIR)/Packages
 	@cd debian && gzip -9c dists/universal-apt/main/binary-amd64/Packages > dists/universal-apt/main/binary-amd64/Packages.gz
 
-# Generate the Release file using a configuration file.
+# Generate the Release file using the configuration file.
 $(DISTS)/Release:
 	@echo "Generating Release file..."
 	apt-ftparchive -c=apt-ftparchive.conf release $(DISTS) > $(DISTS)/Release
