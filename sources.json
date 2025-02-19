@@ -19,6 +19,11 @@
         "name": "Surrealist",
         "url": "https://api.github.com/repos/surrealdb/surrealist/releases/latest",
         "package_json": "package-lists/surrealist/packages.json"
+      },
+      {
+        "name": "Flowkeeper",
+        "url": "https://api.github.com/repos/flowkeeper-org/fk-desktop/releases/latest",
+        "package_json": "package-lists/flowkeeper/desktop-packages.json"
       }
     ]
   }
