@@ -26,7 +26,8 @@ The following software is currently available:
 - `discord-canary`  
 - `surrealist`  
 - `flowkeeper`  
-- `globalprotect-openconnect`  
+- `globalprotect-openconnect`
+- `reactive-graph`
 
 ---
 
