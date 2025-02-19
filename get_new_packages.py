@@ -6,9 +6,6 @@ import requests
 from sys import exit, argv
 from typing import List, Tuple
 
-# (Optional) Remove the MAX_PACKAGES constant if it's no longer used.
-# MAX_PACKAGES = 3
-
 # Determine the repository root (assumes this script is in the repo)
 root = Path(__file__).parent
 
