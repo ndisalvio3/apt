@@ -24,6 +24,11 @@
         "name": "Flowkeeper",
         "url": "https://api.github.com/repos/flowkeeper-org/fk-desktop/releases/latest",
         "package_json": "package-lists/flowkeeper/desktop-packages.json"
+      },
+      {
+        "name": "GlobalProtect",
+        "url": "https://api.github.com/repos/yuezk/GlobalProtect-openconnect/releases/latest",
+        "package_json": "package-lists/GlobalProtect/packages.json"
       }
     ]
   }
