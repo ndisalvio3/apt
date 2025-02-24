@@ -28,6 +28,7 @@ The following software is currently available:
 - `flowkeeper`  
 - `globalprotect-openconnect`
 - `reactive-graph`
+- `termius`
 
 ---
 
