@@ -39,6 +39,6 @@
         "name": "Termius",
         "url": "https://www.termius.com/download/linux/Termius.deb",
         "package_json": "package-lists/Termius/latest-packages.json"
-      },
+      }
     ]
   }
