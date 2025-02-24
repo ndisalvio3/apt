@@ -34,6 +34,11 @@
         "name": "reactive-graph-latest",
         "url": "https://api.github.com/repos/reactive-graph/reactive-graph/releases/latest",
         "package_json": "package-lists/reactive-graph/latest-packages.json"
-      }
+      },
+      {
+        "name": "Termius",
+        "url": "https://www.termius.com/download/linux/Termius.deb",
+        "package_json": "package-lists/Termius/latest-packages.json"
+      },
     ]
   }
