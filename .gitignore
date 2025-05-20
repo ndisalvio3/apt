@@ -1,1 +1,2 @@
 *.deb
+__pycache__/
