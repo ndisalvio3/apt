@@ -1,5 +1,21 @@
 {
   "flowkeeper-arm64.deb": "https://github.com/flowkeeper-org/fk-desktop/releases/download/v0.9.1/flowkeeper-arm64.deb",
   "flowkeeper-legacy.deb": "https://github.com/flowkeeper-org/fk-desktop/releases/download/v0.9.1/flowkeeper-legacy.deb",
-  "flowkeeper.deb": "https://github.com/flowkeeper-org/fk-desktop/releases/download/v0.9.1/flowkeeper.deb"
+  "flowkeeper.deb": "https://github.com/flowkeeper-org/fk-desktop/releases/download/v0.9.1/flowkeeper.deb",
+  "flowkeeper-1.0.0-ubuntu-22.04-arm-nuitka-min-package.deb": "https://github.com/flowkeeper-org/fk-desktop/releases/download/v1.0.0/flowkeeper-1.0.0-ubuntu-22.04-arm-nuitka-min-package.deb",
+  "flowkeeper-1.0.0-ubuntu-22.04-arm-nuitka-package.deb": "https://github.com/flowkeeper-org/fk-desktop/releases/download/v1.0.0/flowkeeper-1.0.0-ubuntu-22.04-arm-nuitka-package.deb",
+  "flowkeeper-1.0.0-ubuntu-22.04-arm-pyinstaller-min-package.deb": "https://github.com/flowkeeper-org/fk-desktop/releases/download/v1.0.0/flowkeeper-1.0.0-ubuntu-22.04-arm-pyinstaller-min-package.deb",
+  "flowkeeper-1.0.0-ubuntu-22.04-arm-pyinstaller-package.deb": "https://github.com/flowkeeper-org/fk-desktop/releases/download/v1.0.0/flowkeeper-1.0.0-ubuntu-22.04-arm-pyinstaller-package.deb",
+  "flowkeeper-1.0.0-ubuntu-22.04-nuitka-min-package.deb": "https://github.com/flowkeeper-org/fk-desktop/releases/download/v1.0.0/flowkeeper-1.0.0-ubuntu-22.04-nuitka-min-package.deb",
+  "flowkeeper-1.0.0-ubuntu-22.04-nuitka-package.deb": "https://github.com/flowkeeper-org/fk-desktop/releases/download/v1.0.0/flowkeeper-1.0.0-ubuntu-22.04-nuitka-package.deb",
+  "flowkeeper-1.0.0-ubuntu-22.04-pyinstaller-min-package.deb": "https://github.com/flowkeeper-org/fk-desktop/releases/download/v1.0.0/flowkeeper-1.0.0-ubuntu-22.04-pyinstaller-min-package.deb",
+  "flowkeeper-1.0.0-ubuntu-22.04-pyinstaller-package.deb": "https://github.com/flowkeeper-org/fk-desktop/releases/download/v1.0.0/flowkeeper-1.0.0-ubuntu-22.04-pyinstaller-package.deb",
+  "flowkeeper-1.0.0-ubuntu-24.04-arm-nuitka-min-package.deb": "https://github.com/flowkeeper-org/fk-desktop/releases/download/v1.0.0/flowkeeper-1.0.0-ubuntu-24.04-arm-nuitka-min-package.deb",
+  "flowkeeper-1.0.0-ubuntu-24.04-arm-nuitka-package.deb": "https://github.com/flowkeeper-org/fk-desktop/releases/download/v1.0.0/flowkeeper-1.0.0-ubuntu-24.04-arm-nuitka-package.deb",
+  "flowkeeper-1.0.0-ubuntu-24.04-arm-pyinstaller-min-package.deb": "https://github.com/flowkeeper-org/fk-desktop/releases/download/v1.0.0/flowkeeper-1.0.0-ubuntu-24.04-arm-pyinstaller-min-package.deb",
+  "flowkeeper-1.0.0-ubuntu-24.04-arm-pyinstaller-package.deb": "https://github.com/flowkeeper-org/fk-desktop/releases/download/v1.0.0/flowkeeper-1.0.0-ubuntu-24.04-arm-pyinstaller-package.deb",
+  "flowkeeper-1.0.0-ubuntu-24.04-nuitka-min-package.deb": "https://github.com/flowkeeper-org/fk-desktop/releases/download/v1.0.0/flowkeeper-1.0.0-ubuntu-24.04-nuitka-min-package.deb",
+  "flowkeeper-1.0.0-ubuntu-24.04-nuitka-package.deb": "https://github.com/flowkeeper-org/fk-desktop/releases/download/v1.0.0/flowkeeper-1.0.0-ubuntu-24.04-nuitka-package.deb",
+  "flowkeeper-1.0.0-ubuntu-24.04-pyinstaller-min-package.deb": "https://github.com/flowkeeper-org/fk-desktop/releases/download/v1.0.0/flowkeeper-1.0.0-ubuntu-24.04-pyinstaller-min-package.deb",
+  "flowkeeper-1.0.0-ubuntu-24.04-pyinstaller-package.deb": "https://github.com/flowkeeper-org/fk-desktop/releases/download/v1.0.0/flowkeeper-1.0.0-ubuntu-24.04-pyinstaller-package.deb"
 }
