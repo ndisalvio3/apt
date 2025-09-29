@@ -1,6 +1,6 @@
 name: Update packages
 
-on:
+#on:
   push:
   schedule:
     - cron: '0 */3 * * *'
